@@ -1,47 +1,40 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import { ImgGalleryItem, ImgGalleryItemImg } from './ImageGalleryItem.styled';
 
-class ImageGalleryItem extends Component {
-  state = {
-    isOpenModal: false,
-  };
-  static propTypes = {
-    webformatURL: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
-    largeImageURL: PropTypes.string.isRequired,
-    toggleModal: PropTypes.func,
-    isOpenModal: PropTypes.bool,
+const ImageGalleryItem = ({ webformatURL, tags, largeImageURL }) => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpenModal(!isOpenModal);
   };
 
-  toggleModal = () => {
-    this.setState(({ isOpenModal }) => ({
-      isOpenModal: !isOpenModal,
-    }));
-  };
-
-  render() {
-    // const isOpenModal = this.state;
-    const { webformatURL, tags, largeImageURL } = this.props;
-    return (
-      <ImgGalleryItem>
-        <ImgGalleryItemImg
-          src={webformatURL}
-          alt={tags}
-          loading="lazy"
-          onClick={this.toggleModal}
+  return (
+    <ImgGalleryItem>
+      <ImgGalleryItemImg
+        src={webformatURL}
+        alt={tags}
+        loading="lazy"
+        onClick={toggleModal}
+      />
+      {isOpenModal && (
+        <Modal
+          tags={tags}
+          largeImageURL={largeImageURL}
+          onClose={toggleModal}
         />
-        {this.state.isOpenModal && (
-          <Modal
-            tags={tags}
-            largeImageURL={largeImageURL}
-            onClose={this.toggleModal}
-          />
-        )}
-      </ImgGalleryItem>
-    );
-  }
-}
+      )}
+    </ImgGalleryItem>
+  );
+};
+
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func,
+  isOpenModal: PropTypes.bool,
+};
 
 export default ImageGalleryItem;

@@ -1,17 +1,11 @@
 import toast, { Toaster } from 'react-hot-toast';
-
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
 import { MainWrapper } from './App.styled';
-
-
-import { useState, useEffect} from 'react';
-
+import { useState, useEffect } from 'react';
 import { fetchImgGallery } from '../api/api';
-
-
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -20,32 +14,12 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [totalHits, setTotalHits] = useState(null);
 
-
-// class App extends Component {
-//   state = {
-//     images: [],
-//     nameRequest: '',
-//     page: 1,
-//     isLoading: false,
-//     error: null,
-//     totalHits: null,
-//   };
-
-const getSearchNameForm = searchName => {
-  setNameRequest(searchName);
-  setPage(1);
-  setImages([]);
-  setTotalHits(null);
-};
-
-  // getSearchNameForm = searchName => {
-  //   this.setState({
-  //     nameRequest: searchName,
-  //     page: 1,
-  //     images: [],
-  //     totalHits: null,
-  //   });
-  // };
+  const getSearchNameForm = searchName => {
+    setNameRequest(searchName);
+    setPage(1);
+    setImages([]);
+    setTotalHits(null);
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -94,12 +68,6 @@ const getSearchNameForm = searchName => {
     setPage(page => page + 1);
   };
 
-  // loadMore = () => {
-  //   this.setState(prevState => ({
-  //     page: prevState.page + 1,
-  //   }));
-  // };
-
   const showBtnLoadMore = () => {
     const ShowBtn = totalHits - page * 12;
     if (ShowBtn > 0 && !isLoading) {
@@ -107,7 +75,6 @@ const getSearchNameForm = searchName => {
     }
     return false;
   };
-
 
   return (
     <MainWrapper>
@@ -120,6 +87,5 @@ const getSearchNameForm = searchName => {
     </MainWrapper>
   );
 };
-
 
 export default App;
